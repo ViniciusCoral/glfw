@@ -2,8 +2,8 @@
 build
 
 #SGE
-bin\
-bin-int\
+bin/
+bin-int/
 
 # Visual Studio clutter
 _ReSharper*
