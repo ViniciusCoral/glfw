@@ -1,6 +1,10 @@
 # The canonical out-of-tree build subdirectory
 build
 
+#SGE
+bin\
+bin-int\
+
 # Visual Studio clutter
 _ReSharper*
 *.sdf
