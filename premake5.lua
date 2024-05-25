@@ -1,15 +1,18 @@
 project "GLFW"
     kind "StaticLib"
     language "C"
-    staticruntime "on"
+    staticruntime "off"
+    warnings "off"
 
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+    --targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    --objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+    targetdir ("Binaries/" .. OutputDir .. "/%{prj.name}")
+    objdir ("Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
     files {
         "include/GLFW/glfw3.h",
         "include/GLFW/glfw3native.h",
-        --"src/glfw_config.h",
+        "src/glfw_config.h",
         "src/context.c",
         "src/init.c",
         "src/input.c",
@@ -49,12 +52,18 @@ project "GLFW"
             "_CRT_SECURE_NO_WARNINGS",
         }
 
-        links {
-            "Dwmapi.lib"
-        }
+        -- links {
+            -- "Dwmapi.lib"
+        -- }
 
     --filter { "system:windows", "configurations:Release" }
     --    buildoptions "/MT"
+
+    filter { "system:windows", "configurations:Debug-AS" }	
+		runtime "Debug"
+		symbols "on"
+		sanitize { "Address" }
+		flags { "NoRuntimeChecks", "NoIncrementalLink" }
     
     filter "configurations:Debug"
         runtime "Debug"
@@ -62,6 +71,11 @@ project "GLFW"
 
     filter "configurations:Release"
         runtime "Release"
-        optimize "on"
+        optimize "speed"
+        -- symbols "off"
+    
+    filter "configurations:Dist"
+        runtime "Release"
+        optimize "speed"
         symbols "off"
         
